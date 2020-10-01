@@ -1,0 +1,20 @@
+jenkins:
+  mode: NORMAL
+  numExecutors: 1
+  labelString: "linux"
+  scmCheckoutRetryCount: 0
+  quietPeriod: 0
+
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  jdk:
+    installations:
+      - name: "jdk8"
+        home: ""
+  maven:
+    installations:
+      - name: "mvn"
+        home: ""

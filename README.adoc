@@ -1,0 +1,38 @@
+= Jenkinsfile Runner Image Packs
+:toc:
+:toc-placement: preamble
+:toclevels: 3
+
+https://gitter.im/jenkinsci/jenkinsfile-runner[image:https://badges.gitter.im/jenkinsci/jenkinsfile-runner.svg[Gitter]]
+
+This repository contains custom https://github.com/jenkinsci/jenkinsfile-runner[Jenkinsfile Runner] images for common use-cases,
+e.g. for building Java projects with Maven or Gradle.
+Each image includes a set of Jenkins plugins, configurations and Pipeline libraries
+which are commonly used in the desired technology stack.
+
+== Available images
+
+* link:./maven[Maven/JDK]
+
+More images may be added later. Feel free to submit your own images
+(link:./CONTRIBUTING.adoc[How to contribute?]).
+
+== Support status
+
+All images in this repository are considered experimental,
+they exist mainly for demo purposes.
+They are provided "as is", without warranty of any kind, express or implied.
+Images may include old Jenkins score and plugin versions with known defects and vulnerabilities.
+Use at your own risk.
+
+== Using images
+
+You can either use the provided images or extend them for your use-cases.
+See the https://github.com/jenkinsci/jenkinsfile-runner/[Jenkinsfile Runner Documentation] for the guidelines.
+Image specific documentation and examples are available in image repositories.
+
+== Contributing
+
+Any contributions are welcome!
+Please feel free to submit patches and to propose new images.
+See the contributing guidelines link:../CONTRIBUTING.adoc[here].

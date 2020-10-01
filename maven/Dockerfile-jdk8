@@ -1,0 +1,52 @@
+FROM jenkins/jenkinsfile-runner:build-mvncache as jfr-mvncache
+
+###
+# Build stage
+###
+FROM maven:3.6.3-adoptopenjdk-8 as jfr-build
+RUN apt-get update && apt-get install -y unzip git && rm -rf /var/lib/apt/lists/*
+
+# TODO: Switch demo to the Custom WAR Packager flow once ready
+ENV MAVEN_OPTS=-Dmaven.repo.local=/mavenrepo
+COPY --from=jfr-mvncache /mavenrepo /mavenrepo
+ADD pom.xml /jenkinsfile-runner/pom.xml
+RUN cd /jenkinsfile-runner && mvn clean package
+# TODO: Should be automated in Parent POM
+# Prepare the Jenkins core
+RUN mkdir /app && unzip /jenkinsfile-runner/target/war/jenkins.war -d /app/jenkins && \
+  rm -rf /app/jenkins/scripts /app/jenkins/jsbundles /app/jenkins/css /app/jenkins/images /app/jenkins/help /app/jenkins/WEB-INF/detached-plugins /app/jenkins/winstone.jar /app/jenkins/WEB-INF/jenkins-cli.jar /app/jenkins/WEB-INF/lib/jna-4.5.2.jar
+
+####
+# Production image
+####
+FROM adoptopenjdk:8u262-b10-jdk-hotspot
+
+LABEL Description="Jenkinsfile Runner base image for building Java/Maven projects"
+
+# Packages
+RUN apt-get update && apt-get install -y wget unzip git && rm -rf /var/lib/apt/lists/*
+
+# Maven
+ENV MAVEN_VERSION 3.6.3
+RUN curl -Lf https://downloads.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar -C /opt -xzv
+ENV M2_HOME /opt/apache-maven-$MAVEN_VERSION
+ENV maven.home $M2_HOME
+ENV M2 $M2_HOME/bin
+ENV PATH $M2:$PATH
+
+COPY --from=jfr-build /jenkinsfile-runner/target/appassembler /app
+COPY --from=jfr-build /jenkinsfile-runner/target/plugins /usr/share/jenkins/ref/plugins
+COPY --from=jenkins/jenkinsfile-runner:1.0-beta-17 /app/bin/jenkinsfile-runner-launcher /app/bin/jenkinsfile-runner-launcher
+# /app/jenkins is a location of the WAR file. It can be empty in the current packaging
+RUN mkdir /app/jenkins
+
+VOLUME /usr/share/jenkins/ref/casc
+
+ENV JENKINS_HOME="/usr/share/jenkins/ref/"
+ENV CASC_JENKINS_CONFIG /usr/share/jenkins/ref/jenkins.yaml
+COPY jenkins.yaml /usr/share/jenkins/ref/jenkins.yaml
+
+ENTRYPOINT ["/app/bin/jenkinsfile-runner",\
+            "-w", "/app/jenkins",\
+            "-p", "/usr/share/jenkins/ref/plugins",\
+            "-f", "/workspace/Jenkinsfile"]

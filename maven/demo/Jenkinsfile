@@ -1,0 +1,10 @@
+node('linux') {
+    withEnv([
+        "JAVA_HOME=${tool 'jdk8'}",
+        'PATH+JAVA=${JAVA_HOME}/bin',
+        "PATH+MAVEN=${tool 'mvn'}/bin"
+    ]) {
+        sh "java -version"
+        sh "mvn -version"
+    }  
+}

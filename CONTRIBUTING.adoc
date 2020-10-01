@@ -1,0 +1,44 @@
+= Contributing to Jenkinsfile Runner Image Packs
+:toc:
+:toc-placement: preamble
+:toclevels: 3
+
+Any contributions are welcome!
+To propose a patch, just submit a pull request to this repository.
+To propose changes or start a discussion,  
+use GitHub issues in this repository.
+
+== Communication channels
+
+* https://gitter.im/jenkinsci/jenkinsfile-runner[image:https://badges.gitter.im/jenkinsci/jenkinsfile-runner.svg[Gitter]]
+* https://www.jenkins.io/sigs/cloud-native/[Jenkins Cloud Native SIG]
+
+== Updating existing images
+
+Just submit a pull request with an update.
+The proposals will be accepted if they are generic enough to be in this sample repository.
+For user-specific needs please https://github.com/jenkinsci/jenkinsfile-runner/blob/master/docs/using/EXTENDING_DOCKER.adoc[extend the images] instead of adding new features directly.
+
+== Adding new images
+
+Each new image should be located in a new directory.
+New images are expected to meet the following requirements:
+
+* The image implements a common use-case for Jenkins Pipeline (e.g. "Building Java Applications with Gradle").
+* The image either extends the vanilla Jenkinsfile Runner image as a base, or uses link:https://github.com/jenkinsci/custom-war-packager[Custom WAR Packager] or link:https://github.com/jenkinsci/jenkinsfile-runner/tree/master/packaging-parent-pom[Jenkinsfile Runner Packaging POM]
+packaging.
+The packaging happens solely in a Dockerfile.
+* There is documentation submitted along with the pull request.
+* There is a smoke test added to the repository and the build Pipeline.
+
+Follow the examples in this repository in the case of concern.
+As a source of inspiration, you can take a look at https://github.com/jenkinsci/jnlp-agents[Jenkins Inbound Agent Images]
+or old link:https://github.com/jenkins-x/jenkins-x-serverless[Jenkins X 1.x: Serverless Mode buildpacks].
+
+== Contributing to Jenkinsfile Runner
+
+If you want to contribute to link:https://github.com/jenkinsci/jenkinsfile-runner/[Jenkinsfile Runner] itself,
+please follow the link:https://github.com/jenkinsci/jenkinsfile-runner/blob/master/CONTRIBUTING.adoc[contributing guidelines] in its repository.
+One changes are integrated and released there,
+the Jenkinsfile Runner version can updated in these images as a downstream pull request.
+
