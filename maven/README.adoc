@@ -1,0 +1,32 @@
+= Jenkinsfile Runner - Maven Package
+
+Jenkinsfile Runner base image for building projects with Java and Apache Maven.
+This image includes:
+
+// TODO: Add JDK 11 image
+
+* Java Development Kit 1.8
+* Maven and Maven plugins
+* Git SCM client and Git Plugins
+* Common reporting plugins for unit tests, code coverage, performance reports, etc.
+* Other commonly used plugins
+
+//TODO(oleg_nenashev): Document a way to get a full BOM with the list of all included plugins
+
+== Status
+
+This base image is under active development.
+More plugins and configurations to be added soon.
+
+== Usage
+
+To run this demo, you will need a Unix operating system with Docker and `make`.
+
+* To build the demo, execute `make build`
+* To run the demo, execute `make run`
+
+== Demos
+
+// TODO: add CodeShip Demo
+
+Coming soon!
