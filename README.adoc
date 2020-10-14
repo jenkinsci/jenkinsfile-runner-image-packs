@@ -10,6 +10,9 @@ e.g. for building Java projects with Maven or Gradle.
 Each image includes a set of Jenkins plugins, configurations and Pipeline libraries
 which are commonly used in the desired technology stack.
 
+NOTE: This project has just started, more image packs will be added soon.
+Everyone is contributed to contribite new packs and to extend the existing ones (link:./CONTRIBUTING.adoc[How to?])
+
 == Available images
 
 * link:./maven[Maven/JDK]
