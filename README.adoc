@@ -38,4 +38,4 @@ Image specific documentation and examples are available in image repositories.
 
 Any contributions are welcome!
 Please feel free to submit patches and to propose new images.
-See the contributing guidelines link:../CONTRIBUTING.adoc[here].
+See the contributing guidelines link:./CONTRIBUTING.adoc[here].
